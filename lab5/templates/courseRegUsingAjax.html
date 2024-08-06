@@ -1,0 +1,40 @@
+{% extends 'basicTemplate.html'%}
+{% block title %} Course Reg through AJAX call {% endblock %}
+{% block content %}
+    <form method="post" action=""> 
+        {% csrf_token %} 
+        Student Name 
+        <select name="stud" id="susn"> 
+        {%for student in students %} 
+        <option value="{{student.id}}">{{student.usn}}</option> 
+        {% endfor %} 
+        </select><br> 
+        Course Name 
+        <select name="course" id="ccode"> 
+        {%for course in courses %} 
+        <option value="{{course.id}}">{{course.courseCode}}</option> 
+        {% endfor %} 
+ 
+        </select><br> 
+        <span id="ans"></span> 
+        <input type="button" value="Enroll" id="ebtn"> 
+    </form> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script> 
+        $(document).ready(function(){ 
+            $("#ebtn").click(function(){ 
+                var susn = $("#susn").val(); 
+                var ccode = $("#ccode").val(); 
+                $.ajax({ 
+                    type: "POST", 
+                    url: "/register/", 
+                    data: {'susn': susn, 'ccode': ccode, csrfmiddlewaretoken:"{{ csrf_token}}" 
+                    },
+                    success: function(response){ 
+                        $("#ans").html(response) 
+                    } 
+                }); 
+            }); 
+        }); 
+    </script> 
+    {% endblock %}

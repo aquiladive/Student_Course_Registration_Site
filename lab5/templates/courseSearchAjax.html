@@ -1,0 +1,32 @@
+{% extends 'basicTemplate.html'%}
+{% block title %} Course REG Search Using Ajax call {% endblock %}
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    Courses:
+    <select name="course" id="cname">
+        {% for course in Course_List %}
+        <option value="{{course.id}}">{{course.courseCode}}</option>
+        {% endfor %}
+    </select>
+    <input type="button" value="Search" id="serbtn">
+    <span id="res"></span>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script>
+    $(document).ready(function(){
+        $("#serbtn").click(function(){
+            var cname=$("#cname").val();
+                        $.ajax({
+                type: "POST",
+                url: "/enrolledlist/",
+                data: {'cname':cname, csrfmiddlewaretoken:"{{ csrf_token}}"},
+                success: function(response){
+                    $("#res").html(response);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

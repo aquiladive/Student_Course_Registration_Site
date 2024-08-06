@@ -1,0 +1,34 @@
+{% if student_list %}
+<h1>
+    Following is the the list of students enrolled  for the course {{course.courseCode}}
+</h1>
+
+<table border="1">
+    <tr>
+        <th>
+            USN
+        </th>
+        <th>
+            NAME
+        </th>
+        <th>
+            SEM
+        </th>
+    </tr>
+    {% for student in student_list %}
+    <tr>
+        <td>
+           {{student.usn}}
+        </td>
+        <td>
+            {{student.name}}
+        </td>
+        <td>
+            {{student.sem}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h1>No Students Enrolled</h1>
+{% endif %}
